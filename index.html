@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Head Soccer SADAS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:ital,wght@0,200;0,300;0,500;0,700;0,800;0,900;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="menu" class="schermata attiva">
+  <header class="logo">
+    <span class="logo-head">HEAD SOCCER</span>
+    <span class="logo-sadas">SADAS</span>
+  </header>
+
+  <main class="menu-corpo">
+    <section class="scelta">
+      <div class="modo" id="modo" role="tablist" aria-label="Modalità di gioco">
+        <button type="button" data-modo="cpu" class="attivo">Contro CPU</button>
+        <button type="button" data-modo="online">Online</button>
+      </div>
+      <div class="passi">
+        <button class="passo attivo" id="passo1" type="button"><b>1</b> Il tuo giocatore</button>
+        <button class="passo" id="passo2" type="button"><b>2</b> Avversario CPU</button>
+      </div>
+      <div class="intestazione">
+        <h2 id="titoloPasso">Scegli il tuo giocatore</h2>
+        <input id="cerca" class="cerca" type="search" placeholder="Cerca per nome…" autocomplete="off" aria-label="Cerca personaggio">
+      </div>
+      <div id="griglia" class="griglia"></div>
+      <div id="dettaglio" class="dettaglio">Passa sopra un personaggio per vedere la sua mossa finale.</div>
+    </section>
+
+    <aside class="sfida" id="pannelloCpu">
+      <div class="slot umano" id="slotUmano">
+        <div class="slot-etichetta">TU</div>
+        <div class="slot-testa"></div>
+        <div class="slot-nome">—</div>
+        <div class="slot-potere"></div>
+      </div>
+      <div class="vs">VS</div>
+      <div class="slot cpu" id="slotCpu">
+        <div class="slot-etichetta">CPU</div>
+        <div class="slot-testa"></div>
+        <div class="slot-nome">—</div>
+        <div class="slot-potere"></div>
+      </div>
+
+      <div class="difficolta" id="difficolta">
+        <span>Difficoltà CPU</span>
+        <div>
+          <button type="button" data-livello="facile">Facile</button>
+          <button type="button" data-livello="normale" class="attivo">Normale</button>
+          <button type="button" data-livello="difficile">Difficile</button>
+        </div>
+      </div>
+
+      <button id="btnGioca" class="gioca" type="button" disabled>GIOCA</button>
+
+      <ul class="comandi">
+        <li><kbd>←</kbd><kbd>→</kbd> muovi</li>
+        <li><kbd>↑</kbd> salta · <kbd>↓</kbd> scendi veloce</li>
+        <li><kbd>Z</kbd> calcio alto · <kbd>X</kbd> calcio rasoterra</li>
+        <li><kbd>Spazio</kbd> mossa finale</li>
+        <li><kbd>C</kbd> lancia · doppio tocco freccia: scatto <small>(solo alcune mosse)</small></li>
+        <li><kbd>P</kbd> pausa · <kbd>M</kbd> audio</li>
+      </ul>
+    </aside>
+
+    <aside class="sfida online nascosto" id="pannelloOnline">
+      <div class="stato-rete">
+        <span class="spia" id="spiaRete"></span>
+        <span id="testoRete">Non connesso</span>
+        <button type="button" class="link nascosto" id="btnRiprova">Riprova</button>
+      </div>
+      <label class="campo">Il tuo nome
+        <input id="nickOnline" maxlength="16" placeholder="Come ti chiamano?" autocomplete="off">
+      </label>
+      <div class="slot umano piccolo" id="slotOnlineMio">
+        <div class="slot-etichetta">IL TUO GIOCATORE</div>
+        <div class="slot-testa"></div>
+        <div class="slot-nome">—</div>
+        <div class="slot-potere"></div>
+      </div>
+
+      <div id="vistaLobby">
+        <div class="crea-stanza">
+          <input id="nomeStanza" maxlength="24" placeholder="Nome della stanza" autocomplete="off">
+          <label class="spunta"><input type="checkbox" id="stanzaPrivata"> privata</label>
+          <button type="button" class="gioca medio" id="btnCrea" disabled>CREA STANZA</button>
+        </div>
+        <div class="titoletto">Stanze aperte</div>
+        <ul id="elencoStanze" class="elenco-stanze"><li class="vuoto">—</li></ul>
+        <div class="entra-codice">
+          <input id="codiceStanza" maxlength="6" placeholder="Codice stanza" autocomplete="off">
+          <button type="button" id="btnEntraCodice" disabled>Entra</button>
+        </div>
+      </div>
+
+      <div id="vistaStanza" class="nascosto">
+        <div class="stanza-titolo"><b id="titoloStanza"></b><span>codice <b id="codiceMio"></b></span></div>
+        <div class="slot umano" id="slotHost">
+          <div class="slot-etichetta">HOST</div>
+          <div class="slot-testa"></div>
+          <div class="slot-nome">—</div>
+          <div class="slot-potere"></div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="slot cpu" id="slotOspite">
+          <div class="slot-etichetta">OSPITE</div>
+          <div class="slot-testa"></div>
+          <div class="slot-nome">—</div>
+          <div class="slot-potere"></div>
+        </div>
+        <p class="nota-stanza" id="notaStanza"></p>
+        <button id="btnAvvia" class="gioca" type="button" disabled>INIZIA</button>
+        <button id="btnLascia" class="secondario" type="button">Lascia la stanza</button>
+      </div>
+      <p class="avviso-online" id="avvisoOnline" role="status"></p>
+    </aside>
+  </main>
+</div>
+
+<div id="partita" class="schermata">
+  <canvas id="campo"></canvas>
+
+  <div id="pannelloPausa" class="pannello nascosto">
+    <h2>PAUSA</h2>
+    <p id="notaPausa"></p>
+    <div class="bottoni">
+      <button type="button" data-azione="riprendi">Riprendi <small>P</small></button>
+      <button type="button" data-azione="ricomincia">Ricomincia</button>
+      <button type="button" data-azione="esci">Torna alla scelta</button>
+    </div>
+  </div>
+
+  <div id="pannelloFine" class="pannello nascosto">
+    <h2 id="esito"></h2>
+    <div id="risultato" class="risultato"></div>
+    <p id="notaFine" class="nota-fine"></p>
+    <div class="bottoni">
+      <button type="button" data-azione="rivincita">Rivincita <small>Invio</small></button>
+      <button type="button" data-azione="esci">Cambia giocatori <small>C</small></button>
+    </div>
+  </div>
+</div>
+
+<div id="erroreDati" class="errore nascosto">
+  Dati dei personaggi mancanti: esegui <code>python tools/aggiorna_personaggi.py</code>.
+</div>
+
+<script src="js/dati.js"></script>
+<script src="js/util.js"></script>
+<script src="js/suoni.js"></script>
+<script src="js/risorse.js"></script>
+<script src="js/stadio.js"></script>
+<script src="js/poteri.js"></script>
+<script src="js/giocatore.js"></script>
+<script src="js/ia.js"></script>
+<script src="js/partita.js"></script>
+<script src="js/lib/mqtt.min.js"></script>
+<script src="js/online.js"></script>
+<script src="js/menu.js"></script>
+</body>
+</html>
